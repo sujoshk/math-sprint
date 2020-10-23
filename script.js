@@ -21,6 +21,7 @@ const playAgainBtn = document.querySelector('.play-again');
 // Equations
 
 let equationsArray = [];
+let questionAmount = 0;
 
 // Game Page
 let firstNumber = 0;
@@ -82,3 +83,80 @@ function createEquations() {
 //   bottomSpacer.classList.add('height-500');
 //   itemContainer.appendChild(bottomSpacer);
 // }
+
+
+
+// Displays 3,2,1, go
+function countdownStart() {
+  countdown.textContent = '3';
+  setTimeout(() => {
+    countdown.textContent = '2';
+  }, 1000);
+
+  setTimeout(() => {
+    countdown.textContent = '1';
+  }, 2000);
+
+  setTimeout(() => {
+    countdown.textContent = 'Go!';
+  }, 3000);
+}
+
+
+
+
+
+
+
+
+// Navigate from Splash Page to Countdown Page
+
+function showCountdown() {
+  countdownPage.hidden = false;
+  splashPage.hidden = true;
+  countdownStart();
+}
+
+
+
+// Get the value from selected radio button
+function getRadioValue() {
+  let radioValue;
+  radioInputs.forEach((radioInput) => {
+    if(radioInput.checked) {
+      radioValue = radioInput.value;
+      
+    }
+  });
+  return radioValue;
+}
+
+
+
+
+
+// Form that decides amount of questions
+function selectQuestionAMount(event) {
+  event.preventDefault();
+  questionAmount = getRadioValue();
+  console.log('Question Amount: ', questionAmount);
+  if(questionAmount) {
+    showCountdown();
+  }
+}
+
+
+
+startForm.addEventListener('click', () => {
+  radioContainers.forEach((radioEl) => {
+    // Remove Selected Label Styling
+    radioEl.classList.remove('selected-label');
+    // Add it back if the radio input is checked 
+    if(radioEl.children[1].checked) {
+      radioEl.classList.add('selected-label');
+    }
+  });
+});
+
+// Event Listeners
+startForm.addEventListener('submit', selectQuestionAMount);
